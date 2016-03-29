@@ -1,0 +1,33 @@
+# Author: Sisinty Sasmita Patra
+
+INC = -I /usr/include/iotivity/resource \
+      -I /usr/include/iotivity/resource/stack \
+      -I /usr/include/iotivity/resource/oc_logger
+
+      #-I /home/sasmita/Desktop/iotivity/resource/csdk/stack/include \
+      -I /home/sasmita/Desktop/iotivity/resource/c_common \
+      -I /home/sasmita/Desktop/iotivity/resource/oc_logger/include \
+
+LIBRARIES = -loc -loctbstack -loc_logger \
+        -lpthread \
+	-lupm-grove
+
+FLAGS = -std=c++11
+
+all: ledserver temperatureserver
+
+ledserver.o: ledserver.cpp
+	g++ -c $(FLAGS) ledserver.cpp $(INC) -DEDISON
+ledserver: ledserver.o
+	g++ -o ledserver $(FLAGS) ledserver.o $(LIBRARIES)
+
+temperatureserver.o: temperatureserver.cpp
+	g++ -c $(FLAGS) temperatureserver.cpp $(INC) -DEDISON
+temperatureserver: temperatureserver.o
+	g++ -o temperatureserver $(FLAGS) temperatureserver.o $(LIBRARIES)
+
+
+clean:
+	rm *.o
+	rm ledserver
+	rm temperatureserver
